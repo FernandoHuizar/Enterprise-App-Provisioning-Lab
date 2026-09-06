@@ -41,31 +41,31 @@ I spun up a free ServiceNow Personal Developer Instance (PDI) on the Australia r
 
 The first connection test still failed, this time with an `InvalidCredentials` error, despite the credentials being correct. ServiceNow has recently restricted Basic Authentication API access for accounts used for both interactive login and API integrations, a similar security hardening move to Salesforce's, but implemented as a role-based exception instead of a full retirement. Granting the admin account the `snc_basic_auth_api_access` role fixed it, and the connection test passed right after. It's a good contrast to the Salesforce issue: one platform closed the door permanently, the other just gated it behind a specific role.
 
-`[SCREENSHOT: snc_basic_auth_api_access role assigned to the admin account in ServiceNow]`
+<img width="1039" height="887" alt="image" src="https://github.com/user-attachments/assets/4d396412-49ea-48c5-95f3-8bfcd8f42fb6" />
 
-`[SCREENSHOT: successful connection test in Entra provisioning settings]`
+<img width="814" height="436" alt="image" src="https://github.com/user-attachments/assets/bd1f61cf-1ea5-4bc9-aa9b-adf10e804a13" />
 
 ### Scoping Provisioning to Specific Users
 
 I created a security group meant to scope provisioning to a small set of test users, but group-based assignment to an Enterprise Application requires Microsoft Entra ID P1 or P2 licensing. This tenant's premium trials (Entra ID P2, Intune, Business Premium) had all already expired from earlier labs and can't be restarted once a trial ends. Rather than rebuild the whole lab on a new tenant just to chase a one-time trial, I documented this as a licensing tier limitation and assigned the two test users to the application individually instead of through the group. Provisioning is still fully scoped, just to specific users rather than a group object, which are really two variations of the same underlying assignment-based scoping model.
 
-`[SCREENSHOT: two test users assigned individually to the ServiceNow enterprise application]`
+<img width="803" height="432" alt="image" src="https://github.com/user-attachments/assets/c06ed1a0-91dc-448c-a694-3c8bdf9f4194" />
 
 ### Verifying Automatic Provisioning End to End
 
 I started provisioning and confirmed the initial sync completed successfully, 100 percent, 2 users processed. Then I checked ServiceNow's user list directly, both test accounts existed with matching usernames and creation timestamps, created automatically with no manual account creation involved.
 
-`[SCREENSHOT: Entra provisioning logs showing successful initial sync, 2 users processed]`
+<img width="805" height="558" alt="image" src="https://github.com/user-attachments/assets/338c39ed-0201-47cd-828a-9d5f4ff5993c" />
 
-`[SCREENSHOT: both test accounts visible in ServiceNow's user list]`
+<img width="1045" height="216" alt="image" src="https://github.com/user-attachments/assets/d63e86d2-89ef-4572-8be2-d5e51c063b4a" />
 
 ### Demonstrating Deprovisioning
 
 I removed one of the two test users from the application's assignment in Entra, then ran Provision on demand for that user instead of waiting for the next scheduled sync cycle. The result showed a successful attribute change, the account's active status flipped from true to false. I confirmed the same change directly in ServiceNow's user list, the account's Active field now read false with an updated timestamp matching the deprovisioning action, while the second test user stayed untouched and active. This shows the full Joiner and Leaver lifecycle: accounts get created automatically on assignment and deactivated automatically on removal, without deleting the account or its history.
 
-`[SCREENSHOT: Provision on demand result showing the active attribute change to false]`
+<img width="808" height="275" alt="image" src="https://github.com/user-attachments/assets/54ececcd-91a9-45ae-a85e-30b668ed7dda" />
 
-`[SCREENSHOT: ServiceNow user list showing one account deactivated, the other still active]`
+<img width="1039" height="198" alt="image" src="https://github.com/user-attachments/assets/2f29d573-734f-4d14-a576-c6fc189187bf" />
 
 ## Key Concepts Demonstrated
 
