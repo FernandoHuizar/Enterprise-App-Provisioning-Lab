@@ -19,7 +19,7 @@ I also built this to settle something that kept tripping me up on SC-300 practic
 
 I added Salesforce as an Enterprise Application in Entra ID straight from the application gallery. This is a different object than an App Registration. An App Registration is a blueprint for an app you build yourself; an Enterprise Application from the gallery is a connector Microsoft already built for a real SaaS product, so turning on provisioning here means configuring an existing integration rather than writing one.
 
-`[SCREENSHOT: Salesforce enterprise application added from the gallery in Entra ID]`
+<img width="857" height="2000" alt="image" src="https://github.com/user-attachments/assets/1fc86cff-6400-42b2-adbc-a147e7234386" />
 
 ### Salesforce Automatic Provisioning: A Platform-Level Dead End
 
