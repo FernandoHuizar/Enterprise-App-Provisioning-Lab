@@ -19,7 +19,7 @@ I also built this to settle something that kept tripping me up on SC-300 practic
 
 I added Salesforce as an Enterprise Application in Entra ID straight from the application gallery. This is a different object than an App Registration. An App Registration is a blueprint for an app you build yourself; an Enterprise Application from the gallery is a connector Microsoft already built for a real SaaS product, so turning on provisioning here means configuring an existing integration rather than writing one.
 
-<img width="857" height="2000" alt="image" src="https://github.com/user-attachments/assets/1fc86cff-6400-42b2-adbc-a147e7234386" />
+<img width="1067" height="1160" alt="image" src="https://github.com/user-attachments/assets/e62dd653-ccd6-40ec-bd38-bd04918acf87" />
 
 ### Salesforce Automatic Provisioning: A Platform-Level Dead End
 
@@ -27,15 +27,15 @@ I tried configuring automatic provisioning against a free Salesforce Developer E
 
 Digging into it, it turns out Salesforce has been retiring this exact login method (the OAuth 2.0 Username-Password Flow) platform-wide since 2023 for security reasons. The toggle to allow it under OAuth and OpenID Connect Settings was greyed out entirely, meaning it can't be re-enabled by an admin anymore, not through a setting, not through a support ticket. The only real fix on Salesforce's side would be building a custom OAuth-based integration by hand, which is exactly the custom-code territory this lab was meant to avoid. I documented this as a genuine, permanent platform limitation rather than a misconfiguration, and moved the lab to a different target application instead of working around it with code.
 
-`[SCREENSHOT: Salesforce OAuth and OpenID Connect Settings showing the Username-Password Flow toggle greyed out]`
+<img width="1057" height="421" alt="image" src="https://github.com/user-attachments/assets/6457fd77-af0c-4489-af51-a1f24608a7be" />
 
-`[SCREENSHOT: CredentialValidationUnavailable error in the Entra provisioning logs]`
+<img width="828" height="515" alt="image" src="https://github.com/user-attachments/assets/41d3ebae-d574-418e-a33f-c438c0a6b723" />
 
 ### Pivoting to ServiceNow
 
 I spun up a free ServiceNow Personal Developer Instance (PDI) on the Australia release and added ServiceNow as an Enterprise Application in Entra from the gallery. ServiceNow's connector uses Basic Authentication with a username and password rather than Salesforce's retired flow, so it wasn't caught by the same platform-level lockdown.
 
-`[SCREENSHOT: ServiceNow enterprise application added in Entra, provisioning configuration screen]`
+<img width="1053" height="686" alt="image" src="https://github.com/user-attachments/assets/05903736-e5f5-4114-a27c-c96fa5f262a9" />
 
 ### Fixing a ServiceNow Basic Authentication Restriction
 
